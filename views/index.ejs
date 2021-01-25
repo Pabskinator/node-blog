@@ -1,33 +1,9 @@
 <!DOCTYPE html>
 
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="description" content="Node Blog">
-    <meta name="author" content="Adrian Pabe/Pabskinator">
-  
-    <title>Node Blog | <%= title %></title>
-
-    <link rel="stylesheet" href="">
-</head>
-
+<%- include('./partials/head.ejs') %>
 <body>
-    <nav>
-        <div class="site-title">
-            <a href="/">
-                <h1>Node Blog</h1>
-                <p>A Net Droid Site</p>
-            </a>
-        </div>
-
-        <ul>
-            <li><a href="/">Blogs</a></li>
-            <li><a href="/about">About</a></li>
-            <li><a href="/blogs/create">New Blog</a></li>
-        </ul>
-    </nav>
+    <%- include('./partials/nav.ejs') %>
 
     <div class="blogs content">
         <h2>All Blogs</h2>
@@ -45,6 +21,9 @@
             <p>There are no blogs to display.</p>
         <% } %>
     </div>
+
+    <%- include('./partials/footer.ejs') %>
+
     <script src=""></script>
 </body>
 </html>
