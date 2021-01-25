@@ -11,7 +11,7 @@ const server = http.createServer((req, res) => {
     // set header content type
     res.setHeader('Content-Type', 'text/html');
 
-    // basic routing
+    // basic routing - this is basic, dealing with many urls and request and db logic - this might get a little messy
     let path = './views/';
 
     switch (req.url) {
@@ -22,6 +22,12 @@ const server = http.createServer((req, res) => {
         case '/about':
             path += 'about.html';
             res.statusCode = 200;
+            break;
+        case '/about-me':
+            res.statusCode = 301;
+            // redirect
+            res.setHeader('Location', '/about');
+            res.end();
             break;
         default:
             path += '404.html';
