@@ -1,4 +1,5 @@
 const express = require('express');
+const morgan = require('morgan');
 
 // express app - creating an instance of express
 const app = express();
@@ -8,6 +9,21 @@ app.set('view engine', 'ejs');
 
 // listen for requests
 app.listen(3000);
+
+// middleware - sample
+// app.use((req, res, next) => {
+//     console.log('new request made:');
+//     console.log('host: ', req.hostname);
+//     console.log('path: ', req.path);
+//     console.log('method: ', req.method);
+//     next();
+// });
+
+// middleware & static files (images, css)
+app.use(express.static('public'));
+
+// 3rd party middleware - morgan logger
+app.use(morgan('dev'));
 
 app.get('/', (req, res) => {
     // res.send('<p>Home Page</p>'); // sending inline html
