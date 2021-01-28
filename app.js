@@ -36,6 +36,9 @@ app.set('view engine', 'ejs');
 // middleware & static files (images, css)
 app.use(express.static('public'));
 
+// middleware to accept post request data
+app.use(express.urlencoded({ extended: true }));
+
 // 3rd party middleware - morgan logger
 app.use(morgan('dev'));
 
@@ -112,6 +115,7 @@ app.get('/about', (req, res) => {
 
 // BLOG ROUTES
 
+// get all blogs
 app.get('/blogs', (req, res) => {
     Blog.find().sort({ createdAt: -1 })
         .then((result) => {
@@ -125,10 +129,54 @@ app.get('/blogs', (req, res) => {
         })
 })
 
+// create a blog
 app.get('/blogs/create', (req, res) => {
     res.render('create', {
         title: 'Create'
     }); // rendering ejs file
+})
+
+// save a blog
+app.post('/blogs', (req, res) => {
+    const blog = new Blog(req.body);
+
+    blog.save()
+        .then(() => {
+            res.redirect('/blogs')
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+})
+
+// get a single blog
+app.get('/blogs/:id', (req, res) => {
+    const id = req.params.id;
+    Blog.findById(id)
+        .then((result) => {
+            res.render('details', {
+                blog: result,
+                title: 'Blog Details'
+            })
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+})
+
+// delete
+app.delete('/blogs/:id', (req, res) => {
+    const id = req.params.id;
+
+    Blog.findByIdAndDelete(id)
+        .then((result) => {
+            res.json({
+                redirect: '/blogs',
+            });
+        })
+        .catch((err) => {
+            console.log(err);
+        })
 })
 
 // redirects
